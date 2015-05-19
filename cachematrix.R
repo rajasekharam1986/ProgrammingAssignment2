@@ -9,9 +9,8 @@ makeCacheMatrix <- function(x = matrix())
 	get <- function() x                                     ## Function to return the matrix when required to calculate inverse        	
 	setinverse <- function(solve) matrixinverse <<- solve   ## Set the inverse to matrixinverse
 	getinverse <- function() matrixinverse                  ## Function to return the matrixinverse  
-	
 	## A list function that contains all the functions that are defined so far.
-	list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
+	z <- list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 }
 
 
@@ -22,7 +21,8 @@ cacheSolve <- function(x, ...) {
 	## It will be NULL if the inverse is not calculated. 
 	## If solved already, it will return solve(x)
 	matrixinverse <- x$getinverse()    
-
+	message("matrixinverse passed from makeCacheMatrix:")
+	print(matrixinverse)
 	## This part of the code checks to see if matrixinverse is calculated or not
 	## If calculated (not null), then it will print out the message saying the
 	## matrixinverse is being looked up from cache data (lexical scoping) and return
@@ -30,12 +30,16 @@ cacheSolve <- function(x, ...) {
 	## inverse after obtaining the matrix that was stored 
 	if(!is.null(matrixinverse))
 		{
-			message("getting cached data")
+			message("R retrieved cached data")
+			message("Inverse of Matrix :")
 			return(matrixinverse)
 		}
 	temp <- x$get()                    ## Retrieving the stored matrix passed to the function
+	message("Since matrixinverse is NULL, Original matrix passed to CacheSolve Function from makeCacheMatrix Function as below :")
+	print(temp)			 ## Error Debug Validation - Make sure the matrix is passed to cacheSolve function
 	matrixinverse <- solve(temp,...) ## Calculating Inverse of matrix
 	x$setinverse(matrixinverse)	   ## Updating setinverse matrix with the calculated information
+	message("Inverse of Matrix :")
 	matrixinverse                    ## Return the inverse of the matrix.
 }
 
