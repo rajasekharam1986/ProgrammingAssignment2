@@ -33,7 +33,7 @@ cacheSolve <- function(x, ...) {
 			message("getting cached data")
 			return(matrixinverse)
 		}
-	temp <- x$get()
+	temp <- x$get()                    ## Retrieving the stored matrix passed to the function
 	matrixinverse <- solve(temp,...) ## Calculating Inverse of matrix
 	x$setinverse(matrixinverse)	   ## Updating setinverse matrix with the calculated information
 	matrixinverse                    ## Return the inverse of the matrix.
